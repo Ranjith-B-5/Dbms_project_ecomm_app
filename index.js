@@ -1,6 +1,8 @@
-const mysql = require("mysql");
+const mysql = require("mysql2");
 const express = require("express");
 const cors = require("cors");
+
+const { dotenvConfig } = require("custom-env");
 require('dotenv').config();
 
 
@@ -23,7 +25,7 @@ var con = mysql.createConnection(
     }
 );
 
-con.connect(function(err)
+con.connect((err) =>
 {
     if(err) 
     {
@@ -44,23 +46,34 @@ app.get('/',async (req ,res)=>
           console.log("database changed");
       }
   })
+  
 })
 
-app.post('/', async (req, res) => 
-  {
-    const {name , password} = req.body
-    const userinfo = await con.query(
-      "SELECT * from users WHERE name = ? AND password = ? ",[name,password],(err, row)=>
-      {
-        if(err) throw err;
-        res.send(row)
-      }
-    );
-  });
+// app.post('/', async (req, res) => 
+//   {
+//     const {name , password} = req.body
+//     const userinfo = await con.query(
+//       "SELECT * from users WHERE name = ? AND password = ? ",[name,password],(err, row)=>
+//       {
+//         if(err) throw err;
+//         res.send(row)
+//         console.log(row)
+//       }
+//     );
+//   });
 
+  
 
 
 
   app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
   });
+
+
+
+
+
+
+
+

@@ -12,11 +12,11 @@ function Login() {
 		axios
 			.post('http://localhost:3000', {
 				name: name,
-				password: password
-			})
+				password: password		})
 			.then((res) => {
 				window.localStorage.setItem('user', res.data[0].name);
 			})
+	
 			.then(() => {
 				const uname = window.localStorage.setItem('user');
 				if (uname) {
