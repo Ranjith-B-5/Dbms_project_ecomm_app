@@ -5,6 +5,7 @@ import order from '../images/order.png';
 import home from '../images/home.png';
 import user from '../images/user.png';
 import HeaderButton from './HeaderButton';
+import { Link } from 'react-router-dom';
 
 function isUserLoggedIn(e) {
 	e.preventDefault();
@@ -17,9 +18,9 @@ function Menu() {
 	return(
 	<div className="fixed top-0 right-0 h-screen bg-slate-800 w-64 flex flex-col">
         <div className='flex flex-1 flex-col justify-start pt-24 pl-4'>
-		<HeaderButton source={home} txt="Home" />
+		<Link to="/"><HeaderButton source={home} txt="Home" /></Link>
 		<HeaderButton source={user} txt="Profile" />
-		<HeaderButton source={cart} txt="Cart"/>
+		<Link to="/cart"><HeaderButton source={cart} txt="Cart"/></Link>
 		<HeaderButton source={order} txt="Order"/>
         </div>
         <div className='flex flex-col justify-end pl-6'>

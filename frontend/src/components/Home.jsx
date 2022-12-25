@@ -30,7 +30,7 @@ function Home() {
 	return (
 		<div className="m-0 w-full h-full bg-gray-100 pr-64 pt-14">
 			<div className="fixed top-0 z-20 w-full flex flex-row justify-start bg-slate-800 h-16 p-2 shadow-md " />
-			<div className="grid grid-cols-3 gap-4 p-8">{pimg?.map((props) => <Pimage id={props.PID} source={props.image} desc={props.PDesc} price={props.Price} pname={props.Pname}/>)}</div>
+			<div className="grid grid-cols-2 gap-4 p-8">{pimg?.map((props) => <Pimage id={props.PID} source={props.image} desc={props.PDesc} price={props.Price} pname={props.PName}/>)}</div>
 			<Menu />
 		</div>
 	);

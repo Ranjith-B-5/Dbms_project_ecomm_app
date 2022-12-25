@@ -20,7 +20,7 @@ function Login() {
 			.then(() => {
 				const uname = window.localStorage.getItem('user');
 				if (uname) {
-					window.location.href = '/home';
+					window.location.href = '/';
 				}
 			})
 			.catch((err) => {
