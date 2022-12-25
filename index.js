@@ -1,4 +1,4 @@
-const mysql = require("mysql2");
+const mysql = require('mysql2/promise');
 const express = require("express");
 const cors = require("cors");
 
@@ -13,9 +13,10 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 
+async function main()
+{
 
-
-var con = mysql.createConnection(
+const con = await mysql.createConnection(
     {
         host: "localhost",
         user: "root",
@@ -25,42 +26,28 @@ var con = mysql.createConnection(
     }
 );
 
-con.connect((err) =>
-{
-    if(err) 
-    {
-    throw err;
-    }
-    console.log("success");
-});
-
-app.get('/',async (req ,res)=>
-{
-  con.query("use cse1", function(err,result)
-  {
-      if(err)
-      {
-          console.log(error);
-      }
-      else{
-          console.log("database changed");
-      }
-  })
-  
-})
-
-// app.post('/', async (req, res) => 
+// app.get('/',async (req ,res)=>
+// {
+//   con.query("use cse1", function(err,result)
 //   {
-//     const {name , password} = req.body
-//     const userinfo = await con.query(
-//       "SELECT * from users WHERE name = ? AND password = ? ",[name,password],(err, row)=>
+//       if(err)
 //       {
-//         if(err) throw err;
-//         res.send(row)
-//         console.log(row)
+//           console.log(error);
 //       }
-//     );
-//   });
+//       else{
+//           console.log("database changed");
+//       }
+//   })
+  
+// })
+
+app.post('/', async (req, res) => 
+  {
+    const {name , password} = req.body
+    const [rows] = await con.execute(
+      "SELECT * from users WHERE name = ? AND password = ? ",[name,password])
+        res.send(rows);
+  });
 
   
 
@@ -70,10 +57,8 @@ app.get('/',async (req ,res)=>
     console.log(`Server listening on ${PORT}`);
   });
 
+}
 
 
-
-
-
-
+main();
 
