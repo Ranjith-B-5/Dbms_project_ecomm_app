@@ -30,17 +30,43 @@ const con = await mysql.createConnection(
 
 app.post('/', async (req, res) => 
   {
+    try{
     const {name , password} = req.body
     const [rows] = await con.execute(
       "SELECT * from user WHERE Name = ? AND Password = ? ",[name,password])
       console.log(rows)
         res.send(rows);
+    }
+    catch(error)
+    {
+      res.status(500).send({error: error.message})
+    }
+  });
+
+  app.post('/signup', async (req, res) => 
+  {
+    const {email, name , password} = req.body
+    try{
+    const [rows] = await con.execute(
+      "INSERT INTO user(email,name,password) VALUES(?,?,?)",[email,name,password])
+        res.send(rows);
+    }
+    catch(error)
+    {
+      res.status(500).send({error: error.message})
+    }
   });
 
 app.get('/',async (req ,res)=>
 {
+  try{
   const [rows] = await con.execute("SELECT * from product");
   res.send(rows);
+  }
+  catch(error)
+  {
+    res.status(500).send({error: error.message})
+  }
   
 })
   
