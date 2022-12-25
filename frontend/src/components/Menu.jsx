@@ -13,6 +13,7 @@ function isUserLoggedIn(e) {
 }
 
 function Menu() {
+
 	return(
 	<div className="fixed top-0 right-0 h-screen bg-slate-800 w-64 flex flex-col">
         <div className='flex flex-1 flex-col justify-start pt-24 pl-4'>
@@ -22,7 +23,7 @@ function Menu() {
 		<HeaderButton source={order} txt="Order"/>
         </div>
         <div className='flex flex-col justify-end pl-6'>
-		<button onClick={isUserLoggedIn} className="h-12 w-48 bg-slate-800 flex flex-row hover:scale-75 border-solid border-b-2 mb-4">
+		<button onClick={isUserLoggedIn} className="h-12 w-48 bg-slate-700 flex flex-row hover:scale-75 border-solid border-b-2 mb-4">
 		<div>
 			<img src={logout_logo} alt="logo" className="w-12 h-12 hover:scale-75 "></img></div>
             <div className="pl-12 pt-2"><text className="text-white text-lg">Logout</text></div>

@@ -14,13 +14,13 @@ function Login() {
 				name: name,
 				password: password		})
 			.then((res) => {
-				window.localStorage.setItem('user', res.data[0].name);
+				window.localStorage.setItem('user', res.data[0].Name);
 			})
 	
 			.then(() => {
-				const uname = window.localStorage.setItem('user');
+				const uname = window.localStorage.getItem('user');
 				if (uname) {
-					window.location.href = '/';
+					window.location.href = '/home';
 				}
 			})
 			.catch((err) => {

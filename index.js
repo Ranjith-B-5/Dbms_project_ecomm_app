@@ -21,34 +21,28 @@ const con = await mysql.createConnection(
         host: "localhost",
         user: "root",
         password: process.env.MYSQL_PASSWORD,
-        database: "cse1",
+        database: "ecommerceapp",
         multipleStatements: true
     }
 );
 
-// app.get('/',async (req ,res)=>
-// {
-//   con.query("use cse1", function(err,result)
-//   {
-//       if(err)
-//       {
-//           console.log(error);
-//       }
-//       else{
-//           console.log("database changed");
-//       }
-//   })
-  
-// })
+
 
 app.post('/', async (req, res) => 
   {
     const {name , password} = req.body
     const [rows] = await con.execute(
-      "SELECT * from users WHERE name = ? AND password = ? ",[name,password])
+      "SELECT * from user WHERE Name = ? AND Password = ? ",[name,password])
+      console.log(rows)
         res.send(rows);
   });
 
+app.get('/',async (req ,res)=>
+{
+  const [rows] = await con.execute("SELECT * from product");
+  res.send(rows);
+  
+})
   
 
 
