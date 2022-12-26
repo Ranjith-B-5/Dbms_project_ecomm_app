@@ -57,6 +57,20 @@ app.post('/', async (req, res) =>
     }
   });
 
+  app.post('/home', async (req,res)=>
+  {
+    const {pid,user} = req.body;
+    try{
+      const [rows]= await con.execute(
+        "INSERT INTO cart (username,pid) VALUES (?,?)",[user,pid])
+      res.send(rows)
+    }
+    catch(error)
+    {
+      res.status(500).send({error: error.message})
+    }
+  })
+
 app.get('/',async (req ,res)=>
 {
   try{
@@ -70,6 +84,20 @@ app.get('/',async (req ,res)=>
   
 })
   
+app.get('/cart',async (req ,res)=>
+{
+  const uname= (req.query.user) // accessing data from get req params
+  try{
+  const [rows] = await con.execute("select * from product where PID in (select pid from cart where username = ?)",[uname])
+  console.log(rows)
+  res.send(rows);
+  }
+  catch(error)
+  {
+    res.status(500).send({error: error.message})
+  }
+  
+})
 
 
 
