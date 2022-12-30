@@ -9,22 +9,24 @@ function Cimage(props)
     async function decrement()  //issue price not updating on first click
     {
         if(qty===1)
-        {setQty(1)}
-
+        {
+          setQty(1)
+        }
         else{
-            const newQty =  qty-1;
-            setQty(newQty)}
-            const newtprice = qty*props.price;
-        setPrice(newtprice)
+            setQty(qty-1)
+        }
     }
 
     async function increment()
     {
-        const newQty =  qty+1;
-        setQty(newQty)
+        setQty(qty+1)
+    }
+
+    useEffect(()=>
+    {
         const newtprice = qty*props.price;
         setPrice(newtprice)
-    }
+    },[qty])
 
 return(
     <div className="flex flex-row  bg-white shadow-sm p-4 h-56" id={props.id}>
