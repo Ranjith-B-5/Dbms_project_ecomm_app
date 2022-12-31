@@ -59,10 +59,10 @@ app.post('/', async (req, res) =>
 
   app.post('/home', async (req,res)=>
   {
-    const {pid,user} = req.body;
+    const {pid,user,tprice} = req.body;
     try{
       const [rows]= await con.execute(
-        "INSERT INTO cart (username,pid) VALUES (?,?)",[user,pid])
+        "INSERT INTO cart (username,pid,tprice) VALUES (?,?,?)",[user,pid,tprice])
       res.send(rows)
     }
     catch(error)
@@ -86,10 +86,9 @@ app.get('/',async (req ,res)=>
   
 app.get('/cart',async (req ,res)=>
 {
-  const uname= (req.query.user) // accessing data from get req params
+  const uname= (req.query.user)// accessing data from get req params
   try{
-  const [rows] = await con.execute("select * from product where PID in (select pid from cart where username = ?)",[uname])
-  console.log(rows)
+  const [rows] = await con.execute("select * from product,cart where product.PID = cart.pid AND cart.username = ?",[uname])
   res.send(rows);
   }
   catch(error)
@@ -98,6 +97,38 @@ app.get('/cart',async (req ,res)=>
   }
   
 })
+
+app.post('/removeproduct', async (req,res)=>
+{
+  const {pid,user} = req.body;
+  try{
+    const [rows]= await con.execute(
+      "DELETE FROM cart WHERE username = ? AND pid = ?",[user,pid])
+    res.send(rows)
+  }
+  catch(error)
+  {
+    res.status(500).send({error: error.message})
+  }
+})
+
+app.post('/incdec', async (req,res)=>
+{
+  const {pid,user,qty} = req.body;
+  console.log(qty)
+  console.log(pid)
+  console.log(user)
+  try{
+    const [rows]= await con.execute(
+      "UPDATE cart SET qty = ? WHERE username = ? AND pid = ?",[qty,user,pid])
+    res.send(rows)
+  }
+  catch(error)
+  {
+    res.status(500).send({error: error.message})
+  }
+})
+
 
 
 

@@ -6,13 +6,13 @@ function Pimage(props)
 
   function addToCart(e)
   {
-    console.log(e);
     const username = window.localStorage.getItem("user");
     const pid = e.target.id;
     axios.post("http://localhost:3000/home",
     {
       pid:pid,
-      user:username
+      user:username, 
+      tprice: props.price
     })
     .then((res) =>
     {

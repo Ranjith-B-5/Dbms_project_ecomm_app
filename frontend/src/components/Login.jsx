@@ -14,6 +14,7 @@ function Login() {
 				name: name,
 				password: password		})
 			.then((res) => {
+				console.log(res)
 				window.localStorage.setItem('user', res.data[0].Name);
 			})
 	

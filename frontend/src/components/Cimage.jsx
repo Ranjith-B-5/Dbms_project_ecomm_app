@@ -1,12 +1,56 @@
+import axios from "axios";
 import React, { useEffect } from "react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function Cimage(props)
 {
-    const [qty, setQty] = useState(1);
+  
+    const [qty, setQty] = useState(props.quantity);
     const [tprice, setPrice] = useState(props.price);
 
-    async function decrement()  //issue price not updating on first click
+
+    async function removeCart(e)
+    {
+        var pid = e.target.id
+        const loggedinuser = window.localStorage.getItem("user")
+        axios.post("http://localhost:3000/removeproduct",
+        {
+            pid : pid,
+            user : loggedinuser
+        })
+        .then((res)=>
+        {
+        window.location.href = '/cart';
+        }
+        )
+        .catch((err)=>
+        console.log(err))
+    }
+    
+    async function incdec(pid,qty)
+    {
+    const loggedinuser = window.localStorage.getItem("user")
+    axios.post("http://localhost:3000/incdec",
+    {
+        pid : pid,
+        user : loggedinuser,
+        qty: qty,
+
+    })
+    .then((res)=>
+    {
+        if(res?.data)
+        {
+    // window.location.href = '/cart';
+        }
+    }
+    )
+    .catch((err)=>
+    console.log(err))
+}
+
+    async function decrement(e)  
     {
         if(qty===1)
         {
@@ -17,16 +61,20 @@ function Cimage(props)
         }
     }
 
-    async function increment()
+    async function increment(e)
     {
         setQty(qty+1)
     }
 
     useEffect(()=>
     {
+
         const newtprice = qty*props.price;
         setPrice(newtprice)
+        incdec(props.id,qty);
     },[qty])
+
+
 
 return(
     <div className="flex flex-row  bg-white shadow-sm p-4 h-56" id={props.id}>
@@ -42,7 +90,7 @@ return(
             <div className ="w-8 h-8 text-center p-1 border-solid border-y-2 shadow-sm border-gray-500">{qty}</div>
             <button className ="w-8 h-8 border-solid border-2 shadow-sm border-gray-500" onClick={increment}>+</button>
         </div>
-        <div className="flex-1 pl-4"><button id={props.id} className="w-24 h-8 bg-red-700 rounded-md hover:bg-red-600 text-cyan-50 mt-8">Remove item</button></div>
+        <div className="flex-1 pl-4"><button id={props.id}  onClick={removeCart} className="w-24 h-8 bg-red-700 rounded-md hover:bg-red-600 text-cyan-50 mt-8">Remove item</button></div>
         
         </div>
         </div>
