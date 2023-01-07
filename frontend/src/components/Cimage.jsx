@@ -28,22 +28,19 @@ function Cimage(props)
         console.log(err))
     }
     
-    async function incdec(pid,qty)
+    async function incdec(pid,quantity)
     {
     const loggedinuser = window.localStorage.getItem("user")
     axios.post("http://localhost:3000/incdec",
     {
         pid : pid,
         user : loggedinuser,
-        qty: qty,
+        qty: quantity,
 
     })
     .then((res)=>
     {
-        if(res?.data)
-        {
-    // window.location.href = '/cart';
-        }
+       axios.get("/cart")
     }
     )
     .catch((err)=>
@@ -72,7 +69,7 @@ function Cimage(props)
         const newtprice = qty*props.price;
         setPrice(newtprice)
         incdec(props.id,qty);
-    },[qty])
+    },[props.id, props.price, qty])
 
 
 
