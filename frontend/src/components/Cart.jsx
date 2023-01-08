@@ -30,7 +30,6 @@ function Cart()
 		{
 			console.log(err);
 		})
-		console.log(dataset)
 		return dataset;
 	}
 
@@ -47,12 +46,43 @@ function Cart()
 	
 	function confirmOrder()
    {
-	if(ordercard==0)
+	if(ordercard===0)
 		setConfirmOrder(1)
 	else 
 		setConfirmOrder(0)
 	}
 
+	async function placeOrder(e)
+	{
+		axios
+		.post('http://localhost:3000/confirmorder', {
+			pimg:pimg,
+			username : username,
+			orderaddress: orderaddress,
+			pincode: pincode,
+			mobnum: mobnum,
+			landmark: landmark
+				})
+		.then((res) => {
+			console.log(res.data)
+			// setOaddress('')
+			// setPincode('')
+			// setMobnum('')
+			// setLandmark('')
+			alert("order placed successfully ✅")
+			window.location.href = '/'
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+             
+		
+		
+		if(ordercard===0)
+		setConfirmOrder(1)
+	   else 
+		setConfirmOrder(0)
+    }
 
 	useEffect(()=>
 	{
@@ -79,7 +109,7 @@ function Cart()
 			<p className="py-2 text-2xl font-mono text-center">Order Info</p>
 			<div className="w-5/5 h-36 flex flex-row justify-center items-center"><img className="w-36 h-28" alt="order" src={order_image}></img></div>
 			<p className="py-2 text-xl font-sans pl-3">Enter Delivery Address</p>
-			<form className="flex flex-col">
+			<form onSubmit={(e)=> {placeOrder(e)}} className="flex flex-col">
 			<input
 							className="ml-3 mt-2 p-3 w-3/5 h-8 border-solid border-slate-400 border-b-2 focus:outline-none"
 							type="text"
@@ -120,10 +150,11 @@ function Cart()
 								setMobnum(e.target.value);
 							}}
 						/>
-						</form>
 		<div className="flex flex-row justify-center items-center">
-		<button onClick={confirmOrder} className=" mt-14 h-10  border-solid border-2 mr-4 p-1.5 rounded-md bg-green-700  hover:bg-green-600 text-cyan-50" >Confirm Order</button>
-		</div></div>}
+		<button className=" mt-14 h-10  border-solid border-2 mr-4 p-1.5 rounded-md bg-green-700  hover:bg-green-600 text-cyan-50" >Confirm Order</button>
+		</div>
+		</form>
+	</div>}
 	</div>
     )
 }

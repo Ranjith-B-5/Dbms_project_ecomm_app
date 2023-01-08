@@ -115,9 +115,6 @@ app.post('/removeproduct', async (req,res)=>
 app.post('/incdec', async (req,res)=>
 {
   const {pid,user,qty} = req.body;
-  console.log(qty)
-  console.log(pid)
-  console.log(user)
   try{
     const [rows]= await con.execute(
       "UPDATE cart SET qty = ? WHERE username = ? AND pid = ?",[qty,user,pid])
@@ -129,7 +126,22 @@ app.post('/incdec', async (req,res)=>
   }
 })
 
+app.post("/confirmorder",async(req,res)=>
+{
+  console.log("inside confirm order")
+  const {pimg,username,orderaddress, pincode,mobnum,landmark} = req.body;
+  try{
+    const [rows1] = await con.execute(
+      "INSERT INTO pdtorder (ouname,oaddress,pincode,mobnum,landmark) VALUES (?,?,?,?,?)",[username,orderaddress,pincode,mobnum,landmark])
+      const [rows2] = await con.execute("DELETE FROM CART WHERE username=?",[username])
 
+      res.send({rows1,rows2})
+  }
+  catch(error)
+  {
+    res.status(500).send({error: error.message})
+  }
+})
 
 
   app.listen(PORT, () => {
