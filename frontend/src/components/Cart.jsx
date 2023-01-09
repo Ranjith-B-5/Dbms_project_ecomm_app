@@ -4,7 +4,6 @@ import Cimage from './Cimage';
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from 'react-router-dom';
-import Orderconfirm from "./Orderconfirm";
 import order_image from "../images/order_image.jpg"
 
 

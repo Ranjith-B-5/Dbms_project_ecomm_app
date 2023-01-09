@@ -128,9 +128,7 @@ app.post('/incdec', async (req,res)=>
 
 app.post("/confirmorder",async(req,res)=>
 {
-  console.log("inside confirm order")
   const {pimg,username,orderaddress, pincode,mobnum,landmark} = req.body;
-  console.log(pimg)
   var amount = 0;
   for(let i=0;i<pimg.length;i++)
   {
@@ -145,7 +143,10 @@ app.post("/confirmorder",async(req,res)=>
       {
       pimg.map(async (props)=>
       {
-        let [rows3] = await con.execute("INSERT INTO orderproduct (uname,opid,qty,uprice) VALUES (?,?,?,?)",[username,props.pid,props.qty,props.tprice])
+        let [orderid] = await con.execute("SELECT oid from pdtorder where ouname=?",[username])
+        let len = orderid.length
+        console.log(len)
+        let [rows3] = await con.execute("INSERT INTO orderproduct (oid,uname,opid,qty,uprice,sid) VALUES (?,?,?,?,?,?)",[orderid[len-1].oid,username,props.pid,props.qty,props.tprice,props.SID])
         return rows3
       })
     }
@@ -159,6 +160,20 @@ app.post("/confirmorder",async(req,res)=>
   }
 })
 
+app.get('/order',async (req ,res)=>
+{
+  const uname= (req.query.user)
+// accessing data from get req params
+  try{
+  const [rows] = await con.execute("select * from orderproduct,pdtorder,supplier,product where orderproduct.oid = pdtorder.oid and orderproduct.sid=supplier.SID and orderproduct.opid = product.PID and orderproduct.uname=?",[uname])
+  res.send(rows);
+  }
+  catch(error)
+  {
+    res.status(500).send({error: error.message})
+  }
+  
+})
 
   app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);

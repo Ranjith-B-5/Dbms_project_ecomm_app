@@ -2,7 +2,6 @@ import Login from './Login.jsx';
 import Signup from './Signup.jsx';
 import Home from './Home.jsx';
 import Cart from './Cart';
-import Orderconfirm from './Orderconfirm.jsx';
 import Orderpage from './Orderpage.jsx';
 import { Routes, Route } from "react-router-dom";
 
@@ -14,7 +13,6 @@ function App() {
 		<Route path="/" element={uname?<Home/>:<Login />}/>
 		<Route path ="/signup" element={<Signup/>}/>
 		<Route path ="/cart" element={<Cart/>}/>
-		<Route path ="/orderconfirm" element={<Orderconfirm/>}/>
 		<Route path ="/order" element={<Orderpage/>}/>
 	</Routes>
 	);

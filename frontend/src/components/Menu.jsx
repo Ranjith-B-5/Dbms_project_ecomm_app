@@ -21,7 +21,7 @@ function Menu() {
 		<Link to="/"><HeaderButton source={home} txt="Home" /></Link>
 		<HeaderButton source={user} txt="Profile" />
 		<Link to="/cart"><HeaderButton source={cart} txt="Cart"/></Link>
-		<HeaderButton source={order} txt="Order"/>
+		<Link to="/order"><HeaderButton source={order} txt="Order"/></Link>
         </div>
         <div className='flex flex-col justify-end pl-6'>
 		<button onClick={isUserLoggedIn} className="h-12 w-48 bg-slate-700 flex flex-row hover:scale-75 border-solid border-b-2 mb-4">

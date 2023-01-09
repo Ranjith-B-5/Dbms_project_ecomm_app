@@ -77,7 +77,7 @@ function Cimage(props)
 
 
 return(
-    <div className="flex flex-row  bg-white shadow-sm p-4 h-56" id={props.id}>
+    <div className="flex flex-row bg-white shadow-lg p-4 h-56">
       <div className="flex-1 border-solid border-r-2 object-cover border-slate-300"><img id={props.id} src={props.source} alt="p_image" className="w-54 h-48" ></img></div>
       <div className="flex-1 flex flex-col justify-around pl-4">
         <div className=" flex flex-row font-bold h-12 w-96 items-center">{props.pname}</div>
