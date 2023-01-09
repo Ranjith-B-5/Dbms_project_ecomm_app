@@ -22,7 +22,6 @@ function Home() {
 	{
 		populate_img().then((data)=>
 		{
-		console.log(data[0].image)
 		setImage(data)
 	})
 },[])

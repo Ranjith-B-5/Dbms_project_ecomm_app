@@ -40,7 +40,7 @@ function Cimage(props)
     })
     .then((res)=>
     {
-       axios.get("/cart")
+
     }
     )
     .catch((err)=>
@@ -52,15 +52,18 @@ function Cimage(props)
         if(qty===1)
         {
           setQty(1)
+          window.location.href = "/cart"
         }
         else{
             setQty(qty-1)
+            window.location.href = "/cart"
         }
     }
 
     async function increment(e)
     {
         setQty(qty+1)
+        window.location.href = "/cart"
     }
 
     useEffect(()=>

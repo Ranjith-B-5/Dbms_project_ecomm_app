@@ -130,12 +130,28 @@ app.post("/confirmorder",async(req,res)=>
 {
   console.log("inside confirm order")
   const {pimg,username,orderaddress, pincode,mobnum,landmark} = req.body;
+  console.log(pimg)
+  var amount = 0;
+  for(let i=0;i<pimg.length;i++)
+  {
+    amount = amount+(pimg[i].Price*pimg[i].qty);
+  }
   try{
     const [rows1] = await con.execute(
-      "INSERT INTO pdtorder (ouname,oaddress,pincode,mobnum,landmark) VALUES (?,?,?,?,?)",[username,orderaddress,pincode,mobnum,landmark])
+      "INSERT INTO pdtorder (ouname,oaddress,pincode,mobnum,landmark,totalamount) VALUES (?,?,?,?,?,?)",[username,orderaddress,pincode,mobnum,landmark,amount])
       const [rows2] = await con.execute("DELETE FROM CART WHERE username=?",[username])
 
-      res.send({rows1,rows2})
+      async function rows4()
+      {
+      pimg.map(async (props)=>
+      {
+        let [rows3] = await con.execute("INSERT INTO orderproduct (uname,opid,qty,uprice) VALUES (?,?,?,?)",[username,props.pid,props.qty,props.tprice])
+        return rows3
+      })
+    }
+
+      const finalrow = rows4().then((rows3)=> {rows1,rows2,rows3})
+      res.send(finalrow)
   }
   catch(error)
   {
