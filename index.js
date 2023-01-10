@@ -164,8 +164,11 @@ app.get('/order',async (req ,res)=>
 {
   const uname= (req.query.user)
 // accessing data from get req params
+console.log("inside order")
   try{
+    console.log("inside order")
   const [rows] = await con.execute("select * from orderproduct,pdtorder,supplier,product where orderproduct.oid = pdtorder.oid and orderproduct.sid=supplier.SID and orderproduct.opid = product.PID and orderproduct.uname=?",[uname])
+  console.log(rows)
   res.send(rows);
   }
   catch(error)
