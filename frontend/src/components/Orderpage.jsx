@@ -2,18 +2,18 @@ import React from "react";
 import Menu from "./Menu";
 import axios from "axios";
 import { useState } from "react";
-import { useEffect ,useLayoutEffect } from "react";
+import { useEffect } from "react";
 
 
 
 function Orderpage()
 {
-    const[orderpdtdetails, setDetails] = useState([])
+    const[orderpdtdetails, setDetails] = useState([{item:1}])
     const username = window.localStorage.getItem("user")
 
     async function get_details()
     {
-        console.log("inside get_details")
+        console.log("inside getdetails")
     const dataset = await axios.get('http://localhost:3000/order',{params:{user: username}})
     .then((res)=>
     {

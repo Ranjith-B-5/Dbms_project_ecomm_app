@@ -146,8 +146,11 @@ app.post("/confirmorder",async(req,res)=>
         let [orderid] = await con.execute("SELECT oid from pdtorder where ouname=?",[username])
         let len = orderid.length
         console.log(len)
+        if(orderid)
+        {
         let [rows3] = await con.execute("INSERT INTO orderproduct (oid,uname,opid,qty,uprice,sid) VALUES (?,?,?,?,?,?)",[orderid[len-1].oid,username,props.pid,props.qty,props.tprice,props.SID])
         return rows3
+        }
       })
     }
 
